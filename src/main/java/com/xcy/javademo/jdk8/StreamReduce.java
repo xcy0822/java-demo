@@ -59,7 +59,7 @@ public class StreamReduce {
         // Combiner合并器：除了使用map函数实现类型转换后的集合归约，我们还可以用Combiner合并器来实现，这里第一次使用到了Combiner合并器。
         // 此处参数三（Integer::sum）是 BinaryOperator<U> combiner,只有和并行流处理才有作用，用于多个并行流的结果处理
         Integer total2 = employees.stream()
-                .reduce(1,(totalAge,emp) -> totalAge + emp.getAge(),Integer::sum);
+                .reduce(0,(totalAge,emp) -> totalAge + emp.getAge(),Integer::sum);
         //注意这里reduce方法有三个参数,参数3不起作用
         System.out.println(total2); //346
 
@@ -67,7 +67,7 @@ public class StreamReduce {
         Integer total3 = employees
                 .parallelStream()
                 .map(Employee::getAge)
-                .reduce(1,Integer::sum,Integer::sum);  //注意这里reduce方法有三个参数
+                .reduce(0,Integer::sum,Integer::sum);  //注意这里reduce方法有三个参数
 
         System.out.println(total3); //346
     }
